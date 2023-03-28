@@ -1,6 +1,6 @@
 using Gtk;
 
-public class Tooth.Widgets.Attachment.Item : Adw.Bin {
+public class Tuba.Widgets.Attachment.Item : Adw.Bin {
 
 	public API.Attachment entity { get; set; default = null; }
 	protected GestureClick gesture_click_controller { get; set; }
@@ -193,6 +193,8 @@ public class Tooth.Widgets.Attachment.Item : Adw.Bin {
 	protected virtual void on_secondary_click () {
 		gesture_click_controller.set_state(EventSequenceState.CLAIMED);
 		gesture_lp_controller.set_state(EventSequenceState.CLAIMED);
+
+		if (app.main_window.is_media_viewer_visible()) return;
 		context_menu.popup();
 	}
 

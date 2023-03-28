@@ -1,8 +1,8 @@
 using Gtk;
 using Gdk;
 
-[GtkTemplate (ui = "/dev/geopjr/Tooth/ui/widgets/status.ui")]
-public class Tooth.Widgets.Status : ListBoxRow {
+[GtkTemplate (ui = "/dev/geopjr/Tuba/ui/widgets/status.ui")]
+public class Tuba.Widgets.Status : ListBoxRow {
 
 	API.Status? _bound_status = null;
 	public API.Status? status {
@@ -54,7 +54,7 @@ public class Tooth.Widgets.Status : ListBoxRow {
 	[GtkChild] public unowned Widgets.MarkupView content;
 	[GtkChild] protected unowned Widgets.Attachment.Box attachments;
 	[GtkChild] protected unowned Button spoiler_button;
-	[GtkChild] protected unowned Widgets.RichLabel spoiler_label;
+	[GtkChild] protected unowned Label spoiler_label;
 	[GtkChild] protected unowned Label spoiler_label_rev;
 	[GtkChild] protected unowned Box spoiler_status_con;
 
@@ -277,6 +277,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 	protected virtual void on_secondary_click () {
 		gesture_click_controller.set_state(EventSequenceState.CLAIMED);
 		gesture_lp_controller.set_state(EventSequenceState.CLAIMED);
+
+		if (app.main_window.is_media_viewer_visible()) return;
 		context_menu.popup();
 	}
 
@@ -446,8 +448,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 			int64 srcval = (int64) src;
 
 			if (srcval > 0) {
-				reblog_button.content.margin_start = 6;
-				reblog_button.content.margin_end = 6;
+				reblog_button.content.margin_start = 12;
+				reblog_button.content.margin_end = 9;
 				target.set_string (@"$srcval");
 			} else {
 				reblog_button.content.margin_start = 0;
@@ -461,8 +463,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 			int64 srcval = (int64) src;
 
 			if (srcval > 0) {
-				favorite_button.content.margin_start = 6;
-				favorite_button.content.margin_end = 6;
+				favorite_button.content.margin_start = 12;
+				favorite_button.content.margin_end = 9;
 				target.set_string (@"$srcval");
 			} else {
 				favorite_button.content.margin_start = 0;
@@ -476,8 +478,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 			int64 srcval = (int64) src;
 
 			if (srcval > 0) {
-				reply_button_content.margin_start = 6;
-				reply_button_content.margin_end = 6;
+				reply_button_content.margin_start = 12;
+				reply_button_content.margin_end = 9;
 				target.set_string (@"$srcval");
 			} else {
 				reply_button_content.margin_start = 0;
@@ -508,9 +510,9 @@ public class Tooth.Widgets.Status : ListBoxRow {
 		reply_button.add_css_class("ttl-status-action-reply");
 		reply_button.tooltip_text = _("Reply");
 		if (status.formal.in_reply_to_id != null)
-			reply_button_content.icon_name = "tooth-reply-all-symbolic";
+			reply_button_content.icon_name = "tuba-reply-all-symbolic";
 		else
-			reply_button_content.icon_name = "tooth-reply-sender-symbolic";
+			reply_button_content.icon_name = "tuba-reply-sender-symbolic";
 
 		if (!status.can_be_boosted) {
 			reblog_button.sensitive = false;
@@ -520,7 +522,7 @@ public class Tooth.Widgets.Status : ListBoxRow {
 		else {
 			reblog_button.sensitive = true;
 			reblog_button.tooltip_text = _("Boost");
-			reblog_button.content.icon_name = "tooth-media-playlist-repeat-symbolic";
+			reblog_button.content.icon_name = "tuba-media-playlist-repeat-symbolic";
 		}
 
 		if (status.id == "") {
@@ -557,8 +559,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 			prop_name = "favourited",
 			action_on = "favourite",
 			action_off = "unfavourite",
-			icon_name = "tooth-unstarred-symbolic",
-			icon_toggled_name = "tooth-starred-symbolic"
+			icon_name = "tuba-unstarred-symbolic",
+			icon_toggled_name = "tuba-starred-symbolic"
 		};
 		favorite_button.add_css_class("ttl-status-action-star");
 		favorite_button.tooltip_text = _("Favorite");
@@ -568,8 +570,8 @@ public class Tooth.Widgets.Status : ListBoxRow {
 			prop_name = "bookmarked",
 			action_on = "bookmark",
 			action_off = "unbookmark",
-			icon_name = "tooth-bookmarks-symbolic",
-			icon_toggled_name = "tooth-bookmarks-filled-symbolic"
+			icon_name = "tuba-bookmarks-symbolic",
+			icon_toggled_name = "tuba-bookmarks-filled-symbolic"
 		};
 		bookmark_button.add_css_class("ttl-status-action-bookmark");
 		bookmark_button.tooltip_text = _("Bookmark");
@@ -583,7 +585,7 @@ public class Tooth.Widgets.Status : ListBoxRow {
 		append_actions ();
 
 		// var menu_button = new MenuButton (); //TODO: Status menu
-		// menu_button.icon_name = "tooth-view-more-symbolic";
+		// menu_button.icon_name = "tuba-view-more-symbolic";
 		// menu_button.get_first_child ().add_css_class ("flat");
 		// actions.append (menu_button);
 
